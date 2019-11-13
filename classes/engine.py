@@ -2,9 +2,6 @@
 #   IMPORTS     #
 #################
 
-# General Python Imports
-import random
-
 # Game Engine Imports
 from classes.cube import Cube
 
@@ -19,7 +16,7 @@ from OpenGL.GLU import *
 
 class engine():
 
-    def main(self):
+    def __init__(self):
         pygame.init()
         display = (800, 600)
         pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
