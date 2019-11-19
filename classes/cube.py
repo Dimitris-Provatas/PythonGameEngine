@@ -13,9 +13,9 @@ from OpenGL.GLU import *
 
 class Cube(object):
 
-    x = y = z = 0
+    new_verts = []
 
-    verticies = (
+    vertices = (
         # center is 0, 0, 0
         # x,  y,  z
         ( 1, -1, -1), #0
@@ -62,19 +62,36 @@ class Cube(object):
     )
 
     def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
+        self.set_verts(self, x, y, z)
+
+        # Render cube
         self.render(self)
+
+    def set_verts(self, x, y, z):
+        # New cube
+        for vert in self.vertices:
+            # New vertex
+            new_vert = []
+
+            new_x = vert[0] + x
+            new_vert.append(new_x)
+
+            new_y = vert[1] + y
+            new_vert.append(new_y)
+
+            new_z = vert[2] + z
+            new_vert.append(new_z)
+
+            self.new_verts.append(new_vert)
 
     # Render Cube
     def render(self):
         glBegin(GL_QUADS)
 
-        for surface in self.verticies:
+        for surface in self.new_verts:
             for vertex in surface:
                 glColor3fv(self.colours[2])
-                glVertex3fv(self.verticies[vertex])
+                glVertex3fv(self.new_verts[vertex])
 
         glEnd()
 
@@ -83,6 +100,6 @@ class Cube(object):
         for edge in self.edges:
             for vertex in edge:
                 glColor3fv(self.colours[4])
-                glVertex3fv(self.verticies[vertex])
+                glVertex3fv(self.new_verts[vertex])
 
         glEnd()
