@@ -70,6 +70,7 @@ class Cube(object):
 
     def set_verts(self, x, y, z):
         # New cube
+        verts = []
         for vert in self.vertices:
             new_vert = []
 
