@@ -62,7 +62,8 @@ class Cube(object):
     )
 
     def __init__(self, x, y, z):
-        self.set_verts(self, x, y, z)
+        # Make the new cube with the new vertices array
+        self.new_verts = self.set_verts(self, x, y, z)
 
         # Render cube
         self.render(self)
@@ -70,7 +71,6 @@ class Cube(object):
     def set_verts(self, x, y, z):
         # New cube
         for vert in self.vertices:
-            # New vertex
             new_vert = []
 
             new_x = vert[0] + x
@@ -82,7 +82,10 @@ class Cube(object):
             new_z = vert[2] + z
             new_vert.append(new_z)
 
-            self.new_verts.append(new_vert)
+            verts.append(new_vert)
+        
+        # Return the new Array
+        return verts
 
     # Render Cube
     def render(self):
