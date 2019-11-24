@@ -1,4 +1,4 @@
-from classes.engine import engine
+from classes.engine import Engine
 
 if __name__ == "__main__":
-    engine.__init__(engine)
+    Engine()

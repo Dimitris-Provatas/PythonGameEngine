@@ -4,6 +4,7 @@
 
 # Game Engine Imports
 from classes.cube import Cube
+from classes.renderer import Renderer
 
 # PyGames
 import pygame
@@ -13,31 +14,24 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+class Engine(object):
 
-class engine():
-    
     # Class Variables
-    x_move = 0
-    y_move = 0
-    z_move = 0
 
     def __init__(self):
-        pygame.init()
-        display = (800, 600)
-        pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-
-        gluPerspective(90, (display[0]/display[1]), 0.1, 50.0) # (FOV, Resolution, NearClippingPlane, FarClippingPlane)
-        
-        glTranslatef(0.0, 0.0, -5) # (x, y, z)
-
-        #glRotatef(25, 5, 5, 5)
 
         # Cube Spawn
-        for i in range(10):
-            Cube.__init__(Cube, i, i, i)
+        for i in range(3):
+            my_cube = Cube(i, i, i)
+            Renderer.renderCube(my_cube.new_verts, my_cube.surfaces, my_cube.edges)
 
         while True:
-            self.main(self)
+            Renderer()
+            self.main()
+
+    #cubes array
+    def cubeArray(self):
+        return self.cubes
 
     def main(self):
         for event in pygame.event.get():
@@ -58,16 +52,16 @@ class engine():
 
                 #Left
                 if event.key == pygame.K_a:
-                    self.x_move = 0.1
+                    Renderer.x_move = 0.1
                 #Right
                 if event.key == pygame.K_d:
-                    self.x_move = -0.1
+                    Renderer.x_move = -0.1
                 #Forward
                 if event.key == pygame.K_w:
-                    self.z_move = 0.1
+                    Renderer.z_move = 0.1
                 #Backward
                 if event.key == pygame.K_s:
-                    self.z_move = -0.1
+                    Renderer.z_move = -0.1
 
             # Keyup inputs
             if event.type == KEYUP:
@@ -78,11 +72,11 @@ class engine():
 
                 # Stops movement on X axis
                 if event.key == pygame.K_a or event.key == pygame.K_d:
-                    self.x_move = 0
+                    Renderer.x_move = 0
 
                 # Stops movement on Z axis
                 if event.key == pygame.K_w or event.key == pygame.K_s:
-                    self.z_move = 0
+                    Renderer.z_move = 0
 
                 # Rotation will be on mouse move
 
@@ -112,18 +106,3 @@ class engine():
             #     #Downwards
             #     if event.button == 5:
             #         glTranslatef(0, 0, 0.5
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-        # Camera Works
-        camera = glGetDoublev(GL_MODELVIEW_MATRIX)
-        
-        camera_x = camera[3][0]
-        camera_y = camera[3][1]
-        camera_z = camera[3][2]
-        #print("x= ", camera_x, ", y=", camera_y, ", z= ", camera_x)
-
-        glTranslatef(self.x_move, self.y_move, self.z_move)
-
-        pygame.display.flip()
-        pygame.time.wait(1) # in milisecs

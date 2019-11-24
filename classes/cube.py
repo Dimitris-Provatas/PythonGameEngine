@@ -13,6 +13,8 @@ from OpenGL.GLU import *
 
 class Cube(object):
 
+    # Class Variables
+
     new_verts = []
 
     vertices = (
@@ -63,10 +65,7 @@ class Cube(object):
 
     def __init__(self, x, y, z):
         # Make the new cube with the new vertices array
-        self.new_verts = self.set_verts(self, x, y, z)
-
-        # Render cube
-        self.render(self)
+        self.new_verts = self.set_verts(x, y, z)
 
     def set_verts(self, x, y, z):
         # New cube
@@ -87,23 +86,3 @@ class Cube(object):
         
         # Return the new Array
         return verts
-
-    # Render Cube
-    def render(self):
-        glBegin(GL_QUADS)
-
-        for surface in self.new_verts:
-            for vertex in surface:
-                glColor3fv(self.colours[2])
-                glVertex3fv(self.new_verts[vertex])
-
-        glEnd()
-
-        glBegin(GL_LINES)
-
-        for edge in self.edges:
-            for vertex in edge:
-                glColor3fv(self.colours[4])
-                glVertex3fv(self.new_verts[vertex])
-
-        glEnd()
